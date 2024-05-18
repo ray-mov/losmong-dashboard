@@ -14,7 +14,9 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       // Checking if the user has a session stored
-      if (!sessionStorage.getItem("cookieFallback")) {
+      const getCookies = await localStorage.getItem("cookieFallback");
+      console.log(getCookies);
+      if (!getCookies) {
         navigate("/login");
         console.log("s1");
         setLoading(false);

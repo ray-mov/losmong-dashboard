@@ -6,21 +6,20 @@ import { useSelector } from "react-redux";
 const AuthLayout = ({ children, authentication = true }) => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
-  const user = useSelector((state) => state.auth.userData);
-  console.log(user)
+  const authStatus = useSelector((state) => state.auth.status);
 
   useEffect(() => {
-    if (authentication && user) {
-      navigate("/home");
-    } else if (user) {
-      alert("already signed in");
-    } else {
+    if (!(authentication && authStatus)) {
       navigate("/login");
     }
     setLoader(false);
-  }, [navigate, authentication, user]);
+  }, []);
 
-  return loader ? <h1>Loading...</h1> : <>{children}</>;
+  return loader ? (
+    <h1 className="flex justify-center items-center">Loading...</h1>
+  ) : (
+    <>{children}</>
+  );
 };
 
 export default AuthLayout;
